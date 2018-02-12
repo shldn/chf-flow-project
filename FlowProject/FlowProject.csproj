@@ -280,10 +280,24 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>Library\UnityAssemblies\UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="WSAUnityHRM">
+      <HintPath>Assets\HoloLensHeartRateMonitorPlugin\HeartRateMonitor_WSA_Plugin\Plugins\WSAUnityHRM.dll</HintPath>
+    </Reference>
+    <Reference Include="WSAUnityHRM">
+      <HintPath>Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\Plugins\WSAUnityHRM.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\Scripts\ModeAController.cs" />
+    <Compile Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\Scripts\ModeBController.cs" />
     <Compile Include="Assets\Scripts\Flowtrail.cs" />
     <Compile Include="Assets\Scripts\FlowtrailController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\csc.rsp" />
+    <None Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\gmcs.rsp" />
+    <None Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\mcs.rsp" />
+    <None Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\smcs.rsp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
