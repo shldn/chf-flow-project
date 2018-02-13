@@ -281,15 +281,13 @@
       <HintPath>Library\UnityAssemblies\UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="WSAUnityHRM">
-      <HintPath>Assets\HoloLensHeartRateMonitorPlugin\HeartRateMonitor_WSA_Plugin\Plugins\WSAUnityHRM.dll</HintPath>
-    </Reference>
-    <Reference Include="WSAUnityHRM">
-      <HintPath>Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\Plugins\WSAUnityHRM.dll</HintPath>
+      <HintPath>Assets\Plugins\WSAUnityHRM.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\Scripts\ModeAController.cs" />
     <Compile Include="Assets\HoloLensHeartRateMonitorPlugin\SampleProject\Assets\Scripts\ModeBController.cs" />
+    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Flowtrail.cs" />
     <Compile Include="Assets\Scripts\FlowtrailController.cs" />
   </ItemGroup>
