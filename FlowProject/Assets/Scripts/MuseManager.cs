@@ -19,6 +19,7 @@ public class MuseManager : MonoBehaviour {
     private List<int> headConnectionStatus = new List<int>() {0,0,0,0};
     private DateTime timeOfLastMessage = DateTime.Now - new TimeSpan(1, 1, 1);
     private Queue<int> blinkQueue = new Queue<int>();
+    private HashSet<string> sensorMeasuresToTrack = new HashSet<string>(); // add metrics to this that have data for each sensor
 
 
     // Accessors
@@ -47,8 +48,21 @@ public class MuseManager : MonoBehaviour {
 	public TextMesh physText = null;
 
 
+    // Events
+    public delegate void Action<T1, T2, T3, T4, T5>(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5);
+    Action<string, float> MetricUpdate; // concentration or mellow
+    Action<string, float, float, float, float> SensorMeasureUpdate; // alpha_relative, beta_relative, gamma_relative, theta_relative, delta_relative, etc.
+
     void Awake(){
         Inst = this;
+
+        sensorMeasuresToTrack = new HashSet<string>() {
+            "alpha_relative",
+            "beta_relative",
+            "gamma_relative",
+            "theta_relative",
+            "delta_relative"
+        };
     }
 
 	void Start () {
@@ -80,17 +94,28 @@ public class MuseManager : MonoBehaviour {
 #if UNITY_STANDALONE
     private void Server_PacketReceivedEvent(UnityOSC.OSCServer sender, UnityOSC.OSCPacket packet)
     {
-        Debug.Log("packet: " + packet.Address + " " + OSCHandler.DataToString(packet.Data));
+        //Debug.Log("packet: " + packet.Address + " " + OSCHandler.DataToString(packet.Data));
         if (packet.Address.Contains("touching_forehead"))
             HandleTouchingForehead((int)packet.Data[0] != 0);
         else if (packet.Address.Contains("concentration"))
             HandleConcentrationSample((float)packet.Data[0]);
+        else if (packet.Address.Contains("mellow"))
+            HandleMellowSample((float)packet.Data[0]);
         else if (packet.Address.Contains("horseshoe"))
             HandleHeadConnectMessage(packet.Data);
         else if (packet.Address.Contains("batt"))
             HandleBatteryStatus(packet.Data);
         else if (packet.Address.Contains("blink"))
             HandleBlinkSample(packet.Data);
+
+        if (SensorMeasureUpdate != null) {
+            foreach (string metric in sensorMeasuresToTrack) {
+                if (packet.Address.Contains(metric)) {
+                    SensorMeasureUpdate(metric, (float)packet.Data[0], (float)packet.Data[1], (float)packet.Data[2], (float)packet.Data[3]);
+                }
+            }
+        }
+
         timeOfLastMessage = DateTime.Now;
     }
 
@@ -121,6 +146,13 @@ public class MuseManager : MonoBehaviour {
     void HandleConcentrationSample(float sample)
     {
         lastConcentrationMeasure = sample;
+        if (MetricUpdate != null)
+            MetricUpdate("concentration", sample);
+    }
+
+    void HandleMellowSample(float sample) {
+        if (MetricUpdate != null)
+            MetricUpdate("mellow", sample);
     }
 
     // These are status messages for connection to the user's head.
