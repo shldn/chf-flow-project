@@ -56,13 +56,13 @@ public class Flowtrail : MonoBehaviour {
 		targetRotationAxis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 		orbitSpeed = Random.Range(45f, 720f);
 		targetOrbitDist = Random.Range(2f, 10f);
-		widthMult = Random.Range(0.1f, 0.25f);
+		widthMult = Random.Range(0.05f, 0.2f);
 		
 		smoothTime = Random.Range(0.5f, 5f);
 
 		tintColor = new Color(Random.Range(0.5f, 1f), Random.Range(0.5f, 1f), Random.Range(0.5f, 1f));
 
-		transferCooldown = Random.Range(0f, 60f);
+		//transferCooldown = Random.Range(0f, 60f);
 	} // End of Awake().
 
 
@@ -111,16 +111,18 @@ public class Flowtrail : MonoBehaviour {
 		trailColor.b = Mathf.SmoothDamp(trailColor.b, targetTrailColor.b, ref trailColorVel.b, smoothTime);
 		Gradient trailGradient = new Gradient();
 		trailGradient.SetKeys(
-			new GradientColorKey[]{ new GradientColorKey(trailColor, 0f), new GradientColorKey(trailColor, 1f) }, new GradientAlphaKey[]{ new GradientAlphaKey(1f, 0f), new GradientAlphaKey(0f, 1f) }
+			new GradientColorKey[]{ new GradientColorKey(trailColor, 0f), new GradientColorKey(trailColor, 1f) }, new GradientAlphaKey[]{ new GradientAlphaKey(0f, 0f), new GradientAlphaKey(1f, 0.5f), new GradientAlphaKey(0f, 1f) }
 		);
 		trail.colorGradient = trailGradient;
 
 
+		/*
 		transferCooldown = Mathf.MoveTowards(transferCooldown, 0f, Time.deltaTime);
 		if(transferCooldown == 0f){
 			AssignToController(FlowtrailController.all[Random.Range(0, FlowtrailController.all.Count)]);
 			transferCooldown = Random.Range(0f, 60f);
 		}
+		*/
 
 	} // End of Update().
 

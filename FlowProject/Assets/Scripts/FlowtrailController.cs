@@ -13,7 +13,7 @@ public class FlowtrailController : MonoBehaviour {
 
 	[Range(0.1f, 1f)] [SerializeField] private float trailWidth = 0.2f; public float TrailWidth { get { return trailWidth; } }
 	[Range(0.02f, 1f)] [SerializeField] private float trailSpeed = 0.1f; public float TrailSpeed { get { return trailSpeed; } }
-	[Range(0.1f, 1f)] [SerializeField] private float trailOrbitDist = 0.5f; public float TrailOrbitDist { get { return trailOrbitDist; } }
+	[Range(0.5f, 1f)] [SerializeField] private float trailOrbitDist = 0.5f; public float TrailOrbitDist { get { return trailOrbitDist; } }
 
 	[SerializeField] private Color color = new Color(); public Color MyColor { get { return color; } }
 
