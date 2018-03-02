@@ -9,7 +9,7 @@ public class FlowtrailController : MonoBehaviour {
 
 	[SerializeField] private GameObject flowTrailPrefab = null;
 	private List<Flowtrail> flowTrails = new List<Flowtrail>();
-	[Range(1, 30)] [SerializeField] private int trailCount = 5;
+	[Range(1, 3000)] [SerializeField] private int trailCount = 5;
 
 	[Range(0.1f, 1f)] [SerializeField] private float trailWidth = 0.2f; public float TrailWidth { get { return trailWidth; } }
 	[Range(0.02f, 1f)] [SerializeField] private float trailSpeed = 0.1f; public float TrailSpeed { get { return trailSpeed; } }
@@ -17,9 +17,15 @@ public class FlowtrailController : MonoBehaviour {
 
 	[SerializeField] private Color color = new Color(); public Color MyColor { get { return color; } }
 
+	private Renderer myRenderer = null;
+
 
 	private void Awake(){
 		all.Add(this);
+		myRenderer = GetComponent<Renderer>();
+		if(myRenderer)
+			myRenderer.material.SetColor ("_EmissionColor", MyColor);
+
 	} // End of Awake().
 
 
