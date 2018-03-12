@@ -29,6 +29,7 @@ public class MuseManager : MonoBehaviour {
             float concentration = lastConcentrationMeasure;
             return !invertConcentration? concentration : 1f - concentration;
         }}
+	public bool MuseDetected { get { return SecondsSinceLastMessage < 1f; } }
     public float SecondsSinceLastMessage { get { return (float)(DateTime.Now - timeOfLastMessage).TotalSeconds; } }
     public int NumBlinksInLastSecond { get { return Sum(blinkQueue); } }
     // float (0-1)

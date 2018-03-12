@@ -45,4 +45,10 @@ public class FlowtrailController : MonoBehaviour {
 		//trailCount = (int)Mathf.Lerp(10, 3000, MuseManager.Inst.LastConcentrationMeasure);
 	} // End of Update().
 
+
+	public void SetIntensity(float intensity){
+		trailWidth = Mathf.Lerp(0.03f, 0.7f, intensity);
+		trailSpeed = Mathf.Lerp(0.02f, 0.1f, intensity);
+	} // End of SetWidth().
+
 } // End of FlowlineController.
