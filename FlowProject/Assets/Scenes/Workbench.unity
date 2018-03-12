@@ -113,96 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &223219268
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 223219273}
-  - component: {fileID: 223219272}
-  - component: {fileID: 223219270}
-  - component: {fileID: 223219269}
-  m_Layer: 0
-  m_Name: FlowOrigin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &223219269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 223219268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1b7e4ed85561c499958dd6c6fa6093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
-    type: 2}
-  trailCount: 20
-  trailWidth: 0.5
-  trailSpeed: 0.2
-  trailOrbitDist: 0.4
-  color: {r: 0, g: 0.42068958, b: 1, a: 0}
---- !u!23 &223219270
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 223219268}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: f6068801e8febdc4dbc8bfa6b7bdae72, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &223219272
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 223219268}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &223219273
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 223219268}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1449993546}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658958780
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
     type: 2}
-  trailCount: 20
+  trailCount: 35
   trailWidth: 0.5
   trailSpeed: 0.2
   trailOrbitDist: 0.4
@@ -288,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 658958780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.098016, y: 2.72, z: -6.7506}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -387,6 +297,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1284333743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1284333745}
+  - component: {fileID: 1284333744}
+  m_Layer: 0
+  m_Name: Muse Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1284333744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1284333743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb0f8d457280fc47b9d13fc53514b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorDisplayOut: {fileID: 2800000, guid: dafde5e18747d2849bdf35b8c87f1acb, type: 3}
+  sensorDisplayIn: {fileID: 2800000, guid: 5fe5ce6f0412998439277325ced41e0b, type: 3}
+  physicalCxnInds: []
+  physText: {fileID: 0}
+--- !u!4 &1284333745
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1284333743}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.355822, y: 3.1370335, z: -5.694259}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338948837
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
     type: 2}
-  trailCount: 20
+  trailCount: 35
   trailWidth: 0.5
   trailSpeed: 0.2
   trailOrbitDist: 0.4
@@ -472,7 +426,7 @@ Transform:
   m_GameObject: {fileID: 1338948837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.1587, y: 2.88, z: 1.429}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -515,8 +469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5393624d10a8db43a9ff795b1b8283c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitDist: 20
-  orbitSpeed: 2
 --- !u!20 &1449993545
 Camera:
   m_ObjectHideFlags: 0
@@ -562,8 +514,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 223219273}
+  m_Children: []
   m_Father: {fileID: 1250828868}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -123.86001, z: 0}
@@ -585,15 +536,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1449993542}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d1b7e4ed85561c499958dd6c6fa6093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
     type: 2}
-  trailCount: 3000
-  trailWidth: 0.2
+  trailCount: 50
+  trailWidth: 0.21
   trailSpeed: 0.07
   trailOrbitDist: 0.4
   color: {r: 0.44852942, g: 0.6805273, b: 1, a: 0}

@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-	[SerializeField] private float orbitDist = 50f;
-	[SerializeField] private float orbitSpeed = 2f;
+	public static CameraController Inst = null;
 
 
-	void Update () {
-		transform.rotation *= Quaternion.AngleAxis(Time.deltaTime * orbitSpeed, Vector3.up);
-		transform.position = -transform.forward * orbitDist;
-	} // End of Update().
+	private void Awake(){
+		Inst = this;
+	} // End of Awake().
 
 } // End of CameraController.

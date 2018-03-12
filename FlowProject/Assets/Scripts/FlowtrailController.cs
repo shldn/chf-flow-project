@@ -41,6 +41,8 @@ public class FlowtrailController : MonoBehaviour {
 			Destroy(flowTrails[removeIndex]);
 			flowTrails.RemoveAt(removeIndex);
 		}
+
+		//trailCount = (int)Mathf.Lerp(10, 3000, MuseManager.Inst.LastConcentrationMeasure);
 	} // End of Update().
 
 } // End of FlowlineController.

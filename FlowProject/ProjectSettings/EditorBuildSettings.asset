@@ -6,5 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/HoloLensHeartRateMonitorPlugin/SampleProject/Assets/Scenes/ModeA.unity
-    guid: bbe0a2e0ce552bf43abfded901750d8e
+    path: Assets/Scenes/Workbench.unity
+    guid: ebf6867a7d23ad148a90ce19a8add0d5

@@ -20,8 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4268660097702922}
   - component: {fileID: 114741337925601564}
+  - component: {fileID: 114930353522243968}
+  - component: {fileID: 114926769230485912}
+  - component: {fileID: 114648340648347386}
   m_Layer: 0
-  m_Name: PlayerPrefab
+  m_Name: FlowPlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,6 +43,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114648340648347386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1152153329384024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114741337925601564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,4 +95,33 @@ MonoBehaviour:
     i14: 114
     i15: 138
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
+--- !u!114 &114926769230485912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1152153329384024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1b7e4ed85561c499958dd6c6fa6093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
+    type: 2}
+  trailCount: 15
+  trailWidth: 0.2
+  trailSpeed: 0.1
+  trailOrbitDist: 0.5
+  color: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &114930353522243968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1152153329384024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc7090e8f89e8941b2c674f077e7453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
