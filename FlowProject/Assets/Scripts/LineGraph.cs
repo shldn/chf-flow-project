@@ -34,7 +34,7 @@ public class LineGraph : MonoBehaviour {
 
 		Vector3[] graphPositions = new Vector3[dataPoints.Count];
 		for(int i = 0; i < dataPoints.Count; i++){
-			graphPositions[i] = transform.position + (transform.rotation * (Vector3.right * i) + (Vector3.up * dataPoints[i] * 10f));
+			graphPositions[i] = transform.position + Vector3.Scale(transform.localScale, (transform.right * i) + (transform.up * dataPoints[i] * 10f));
 		}
 
 		myLineRenderer.positionCount = graphPositions.Length;
