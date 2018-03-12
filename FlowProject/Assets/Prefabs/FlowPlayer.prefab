@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
     type: 2}
-  trailCount: 15
+  trailCount: 300
   trailWidth: 0.2
   trailSpeed: 0.1
   trailOrbitDist: 0.5
@@ -168,3 +168,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc7090e8f89e8941b2c674f077e7453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trailController: {fileID: 114926769230485912}
