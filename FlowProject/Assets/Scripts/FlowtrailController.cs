@@ -16,6 +16,7 @@ public class FlowtrailController : MonoBehaviour {
 	[Range(0.5f, 1f)] [SerializeField] private float trailOrbitDist = 0.5f; public float TrailOrbitDist { get { return trailOrbitDist; } }
 
 	[SerializeField] private Color color = new Color(); public Color MyColor { get { return color; } }
+	public void SetColor(Color color){ this.color = color; }
 
 	private Renderer myRenderer = null;
 
