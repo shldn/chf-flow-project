@@ -162,7 +162,7 @@ public class MuseManager : MonoBehaviour {
     }
 
     // These are status messages for connection to the user's head.
-    // 1 = good, 2 = ok, >=3 bad
+    /1/ 1 = good, 2 = ok, >=3 bad
     void HandleHeadConnectMessage(List<object> data)
     {
         for (int i = 0; i < headConnectionStatus.Count && i < data.Count; ++i)
