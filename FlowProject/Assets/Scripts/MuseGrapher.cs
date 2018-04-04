@@ -15,7 +15,7 @@ public class MuseGrapher : MonoBehaviour {
     private Thread mainThread = null;
 
     // locks
-    Object graphUpdateLock = new Object();
+    private static Object graphUpdateLock = new Object();
 
     private void Awake() {
         mainThread = Thread.CurrentThread;
@@ -50,6 +50,8 @@ public class MuseGrapher : MonoBehaviour {
     void UpdateSample(string metric, float sample) {
         if (Thread.CurrentThread != mainThread) {
             lock (graphUpdateLock) {
+                if (!graphUpdates.ContainsKey(metric))
+                    graphUpdates.Add(metric, new List<float>());
                 graphUpdates[metric].Add(sample);
             }
         }
