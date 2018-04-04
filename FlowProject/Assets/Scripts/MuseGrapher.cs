@@ -47,7 +47,7 @@ public class MuseGrapher : MonoBehaviour {
         UpdateSample(metric + "-S4", v4);
     }
 
-    void UpdateSample(string metric, float sample) {
+    private void UpdateSample(string metric, float sample) {
         if (Thread.CurrentThread != mainThread) {
             lock (graphUpdateLock) {
                 if (!graphUpdates.ContainsKey(metric))
@@ -60,7 +60,7 @@ public class MuseGrapher : MonoBehaviour {
         }
     }
 
-    LineGraph GetGraph(string name) {
+    private LineGraph GetGraph(string name) {
         LineGraph graph = null;
         if(!graphs.TryGetValue(name, out graph)) {
             graph = CreateGraph(name);
@@ -70,7 +70,7 @@ public class MuseGrapher : MonoBehaviour {
         return graph;
     }
 
-    LineGraph CreateGraph(string name) {
+    private LineGraph CreateGraph(string name) {
         GameObject newGraphGO = GameObject.Instantiate(graphPrefab) as GameObject;
         newGraphGO.name = "Graph " + name;
         newGraphGO.transform.parent = transform;

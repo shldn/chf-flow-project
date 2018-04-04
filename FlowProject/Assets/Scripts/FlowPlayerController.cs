@@ -48,8 +48,8 @@ public class FlowPlayerController : NetworkBehaviour{
 	private void Update(){
 
 		trailController.SetCount(eegConcent);
-		trailController.SetSpeed(eegMellow);
 		trailController.SetWidth(eegMellow);
+		trailController.SetSpeed(hrv);
 		trailController.SetColor(playerColor);
 
         if (isLocalPlayer){

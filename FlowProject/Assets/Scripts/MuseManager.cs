@@ -74,12 +74,15 @@ public class MuseManager : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.RightAlt) || Input.GetKeyDown(KeyCode.LeftAlt))
 			invertConcentration = !invertConcentration;
+
+		/*
 		if(Input.GetKeyDown(KeyCode.S))
 			slowResponse = !slowResponse;
         if (Input.GetKeyDown(KeyCode.L))
             useLSL = !useLSL;
         if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.F))
             forceDataDisplay = !forceDataDisplay;
+		*/
 
         //testing
         //HandleConcentrationSample(2f * UnityEngine.Random.value);
