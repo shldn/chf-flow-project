@@ -8,20 +8,31 @@ public class FlowPlayerController : NetworkBehaviour{
 	[SerializeField] private FlowtrailController trailController = null;
 
 	[SyncVar] private float eegVal = 0f;
+	private float lastEegVal = 0f;
+	[SyncVar] private Color playerColor = Color.white;
+
+	private float updateCooldown = 0f;
 
 
 	public override void OnStartLocalPlayer(){
 		local = this;
-		RandomColor();
 		GameObject.Find("Button").GetComponent<Button>().onClick.AddListener(ToggleVal);
 		GameObject.Find("ColorButton").GetComponent<Button>().onClick.AddListener(RandomColor);
 	} // End of OnStartLocalPlayer().
 
 
+	public override void OnStartServer(){
+		base.OnStartServer();
+
+		RandomColor();
+
+	} // End of OnStartServer().
+
+
 	void Update(){
 
 		trailController.SetIntensity(eegVal);
-
+		trailController.SetColor(playerColor);
 
         if (isLocalPlayer){
 
@@ -45,19 +56,25 @@ public class FlowPlayerController : NetworkBehaviour{
 				throttle.y -= 1f;
 
 
-			if(MuseManager.Inst.MuseDetected)
-				eegVal = MuseManager.Inst.LastConcentrationMeasure;
+			updateCooldown = Mathf.MoveTowards(updateCooldown, 0f, Time.deltaTime);
+			if(updateCooldown == 0f){
+				updateCooldown = 0.5f;
+
+				if(MuseManager.Inst.MuseDetected){
+					eegVal = MuseManager.Inst.LastConcentrationMeasure;
+					if(eegVal != lastEegVal){
+						lastEegVal = eegVal;
+						Cmd_SetEEGVal(eegVal);
+					}
+				}
+			}
 			
 			CameraController.Inst.transform.parent.position += transform.rotation * throttle * Time.deltaTime * 3f;
 		}
 
     } // End of Update().
 
-	public void RandomColor(){
-		Local_SetColor(new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f));
-	} // End of ToggleVal().
-
-
+	
 
 	// Networking ============================================================ //
 
@@ -74,33 +91,13 @@ public class FlowPlayerController : NetworkBehaviour{
 
 
 	// Player Color ---------------------------------------------------------- //
-	// This actually does the thing locally--no networking.
-	private void SetColor(Color newColor){
-		trailController.SetColor(newColor);
-	} // End of SetColor().
+	public void RandomColor(){
+		Cmd_SetColor(new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1f));
+	} // End of ToggleVal().
 
-	// This is how you access doing the thing, either as a client or the server.
-	private void Local_SetColor(Color newColor){
-		// If we're not the server, let's do it now before sending the request such that it happens instantly for us.
-		if(!isServer)
-			SetColor(newColor);
-		// We call this regardless of whether or not we're the server... it'll happen on both.
-		Cmd_SetColor(newColor);
-	} // End of SetColor().
-
-	// On the server, this just happens instantly. A client 'requests' this but it actually happens on the server.
-	// We assume the client already called the method locally before informing us... cheeky lil cunt.
-	// 
 	// This does the thing on the server, then relays it to all clients other than the sender.
 	[Command] private void Cmd_SetColor(Color newColor){
-		SetColor(newColor);
-		for(int i = 0; i < NetworkServer.connections.Count; i++)
-			if(NetworkServer.connections[i] != connectionToClient)
-				Target_SetColor(NetworkServer.connections[i], newColor);
+		playerColor = newColor;
 	} // End of Cmd_SetColor().
-
-	[TargetRpc] private void Target_SetColor(NetworkConnection target, Color newColor){
-		SetColor(newColor);
-	} // End of Rpc_SetColor().
 
 } // End of FlowPlayerController.
