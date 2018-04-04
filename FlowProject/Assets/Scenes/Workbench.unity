@@ -942,7 +942,6 @@ GameObject:
   - component: {fileID: 1449993543}
   - component: {fileID: 1449993544}
   - component: {fileID: 1449993547}
-  - component: {fileID: 1449993548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1030,24 +1029,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: 6b71c73e687fa11448ff57ea0b2bde8e, type: 2}
---- !u!114 &1449993548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1449993542}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1b7e4ed85561c499958dd6c6fa6093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flowTrailPrefab: {fileID: 1210269437331558, guid: 3b96fde446231c04a8f3850652fafa23,
-    type: 2}
-  trailCount: 50
-  trailWidth: 0.21
-  trailSpeed: 0.07
-  trailOrbitDist: 0.4
-  color: {r: 0.44852942, g: 0.6805273, b: 1, a: 0}
 --- !u!1 &1512864455
 GameObject:
   m_ObjectHideFlags: 0
