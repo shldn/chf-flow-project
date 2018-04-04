@@ -16,8 +16,12 @@ public class FlowPlayerController : NetworkBehaviour{
 
 	public override void OnStartLocalPlayer(){
 		local = this;
-		GameObject.Find("Button").GetComponent<Button>().onClick.AddListener(ToggleVal);
-		GameObject.Find("ColorButton").GetComponent<Button>().onClick.AddListener(RandomColor);
+		GameObject.Find("button_eeg").GetComponent<Button>().onClick.AddListener(ToggleVal);
+
+		GameObject.Find("button_color_blue").GetComponent<Button>().onClick.AddListener(() => Cmd_SetColor(Color.blue));
+		GameObject.Find("button_color_red").GetComponent<Button>().onClick.AddListener(() => Cmd_SetColor(Color.red));
+		GameObject.Find("button_color_green").GetComponent<Button>().onClick.AddListener(() => Cmd_SetColor(Color.green));
+		GameObject.Find("button_color_random").GetComponent<Button>().onClick.AddListener(RandomColor);
 	} // End of OnStartLocalPlayer().
 
 

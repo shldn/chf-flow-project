@@ -341,6 +341,7 @@
     <Compile Include="Assets\Scripts\FlowtrailController.cs" />
     <Compile Include="Assets\Scripts\LineGraph.cs" />
     <Compile Include="Assets\Scripts\MathUtilities.cs" />
+    <Compile Include="Assets\Scripts\MuseGrapher.cs" />
     <Compile Include="Assets\Scripts\MuseManager.cs" />
     <Compile Include="Assets\Scripts\OSC\OSCBundle.cs" />
     <Compile Include="Assets\Scripts\OSC\OSCClient.cs" />

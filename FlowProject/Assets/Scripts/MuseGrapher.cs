@@ -71,12 +71,11 @@ public class MuseGrapher : MonoBehaviour {
     }
 
     LineGraph CreateGraph(string name) {
-        float distanceFromNearCP = 200f;
         GameObject newGraphGO = GameObject.Instantiate(graphPrefab) as GameObject;
         newGraphGO.name = "Graph " + name;
-        newGraphGO.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane + distanceFromNearCP)) + graphs.Count * 20f * transform.up;
-        newGraphGO.transform.rotation = transform.rotation;
         newGraphGO.transform.parent = transform;
+        newGraphGO.transform.localPosition = Vector3.up * graphs.Count * 2f;
+        newGraphGO.transform.rotation = transform.rotation;
         newGraphGO.transform.localScale = Vector3.one;
 
         return newGraphGO.GetComponent<LineGraph>();

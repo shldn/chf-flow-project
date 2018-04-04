@@ -92,6 +92,7 @@ public class MuseManager : MonoBehaviour {
         //HandleMellowSample(2f * UnityEngine.Random.value);
         //SensorMeasureUpdate("alpha_relative", 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value);
     }
+	
 
     void OnDestroy() {
         Inst = null;

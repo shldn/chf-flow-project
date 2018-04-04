@@ -32,7 +32,7 @@ public class LineGraph : MonoBehaviour {
 		Vector3[] graphPositions = new Vector3[dataPoints.Count];
         int i = 0;
         foreach(float dataPt in dataPoints) {
-            graphPositions[i] = transform.position + Vector3.Scale(transform.localScale, (transform.right * i) + (transform.up * dataPt * 10f));
+            graphPositions[i] = transform.TransformPoint((Vector3.right * i) + (Vector3.up * dataPt * 1f));
             ++i;
         }
 
