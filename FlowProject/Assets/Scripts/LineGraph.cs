@@ -12,7 +12,7 @@ public class LineGraph : MonoBehaviour {
 	private float takeDataCooldown = 0f;
 
 	public float sample = 0f;
-
+    public Color32 color { set { if (myLineRenderer) { myLineRenderer.startColor = myLineRenderer.endColor = value; } } }
 	void Awake () {
 		myLineRenderer = GetComponent<LineRenderer>();
 	}
@@ -20,7 +20,8 @@ public class LineGraph : MonoBehaviour {
 	void Update () {
 		takeDataCooldown -= Time.deltaTime;
 		while(takeDataCooldown <= 0f){
-			takeDataCooldown += (1f / takeDataRate);
+            if(takeDataRate > 0f)
+    			takeDataCooldown += (1f / takeDataRate);
 
 			dataPoints.Enqueue(sample);
 
