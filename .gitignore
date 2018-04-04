@@ -4,6 +4,9 @@
 FlowProject/Library/*
 FlowProject/Temp/*
 
+# unity generates the project files
+*.csproj
+
 # User-specific files
 *.suo
 *.user

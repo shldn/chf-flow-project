@@ -88,9 +88,9 @@ public class MuseManager : MonoBehaviour {
             forceDataDisplay = !forceDataDisplay;
 
         //testing
-        HandleConcentrationSample(2f * UnityEngine.Random.value);
-        HandleMellowSample(2f * UnityEngine.Random.value);
-        SensorMeasureUpdate("alpha_relative", 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value);
+        //HandleConcentrationSample(2f * UnityEngine.Random.value);
+        //HandleMellowSample(2f * UnityEngine.Random.value);
+        //SensorMeasureUpdate("alpha_relative", 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value);
     }
 
     void OnDestroy() {
