@@ -51,8 +51,8 @@ public class MuseManager : MonoBehaviour {
 
     // Events
     public delegate void Action<T1, T2, T3, T4, T5>(T1 p1, T2 p2, T3 p3, T4 p4, T5 p5);
-    Action<string, float> MetricUpdate; // concentration or mellow
-    Action<string, float, float, float, float> SensorMeasureUpdate; // alpha_relative, beta_relative, gamma_relative, theta_relative, delta_relative, etc.
+    public Action<string, float> MetricUpdate; // concentration or mellow
+    public Action<string, float, float, float, float> SensorMeasureUpdate; // alpha_relative, beta_relative, gamma_relative, theta_relative, delta_relative, etc.
 
     void Awake(){
         Inst = this;
@@ -86,16 +86,21 @@ public class MuseManager : MonoBehaviour {
             useLSL = !useLSL;
         if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.F))
             forceDataDisplay = !forceDataDisplay;
+
+        //testing
+        HandleConcentrationSample(2f * UnityEngine.Random.value);
+        HandleMellowSample(2f * UnityEngine.Random.value);
+        SensorMeasureUpdate("alpha_relative", 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value, 2f * UnityEngine.Random.value);
     }
 
     void OnDestroy() {
         Inst = null;
     }
-    
+
 #if UNITY_STANDALONE
     private void Server_PacketReceivedEvent(UnityOSC.OSCServer sender, UnityOSC.OSCPacket packet)
     {
-        //Debug.Log("packet: " + packet.Address + " " + OSCHandler.DataToString(packet.Data));
+        //Debug.LogError("packet: " + packet.Address + " " + OSCHandler.DataToString(packet.Data));
         if (packet.Address.Contains("touching_forehead"))
             HandleTouchingForehead((int)packet.Data[0] != 0);
         else if (packet.Address.Contains("concentration"))
