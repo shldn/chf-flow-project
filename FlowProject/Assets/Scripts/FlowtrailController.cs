@@ -56,7 +56,7 @@ public class FlowtrailController : MonoBehaviour {
 	} // End of SetWidth().
 
 	public void SetSpeed(float intensity){
-		trailSpeed = Mathf.Lerp(0.02f, 0.1f, intensity);
+		trailSpeed = Mathf.Lerp(0.02f, 0.2f, intensity);
 	} // End of SetSpeed().
 
 } // End of FlowlineController.
