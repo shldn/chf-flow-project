@@ -6,6 +6,7 @@ public class FlowPlayerController : NetworkBehaviour{
 
 	public static FlowPlayerController local = null; public static FlowPlayerController Local { get { return local; } }
 	[SerializeField] private FlowtrailController trailController = null;
+	[SerializeField] private GameObject pivotIndicator = null;
 
 	private float updateCooldown = 0f;
 
@@ -22,8 +23,6 @@ public class FlowPlayerController : NetworkBehaviour{
 	[SyncVar] private Color playerColor = Color.white;
 
 
-
-
 	public override void OnStartLocalPlayer(){
 		local = this;
 		GameObject.Find("slider_eeg_concent").GetComponentInChildren<Slider>().onValueChanged.AddListener(Cmd_SetEEGConcent);
@@ -34,6 +33,16 @@ public class FlowPlayerController : NetworkBehaviour{
 		GameObject.Find("button_color_red").GetComponent<Button>().onClick.AddListener(() => Cmd_SetColor(Color.red));
 		GameObject.Find("button_color_green").GetComponent<Button>().onClick.AddListener(() => Cmd_SetColor(Color.green));
 		GameObject.Find("button_color_random").GetComponent<Button>().onClick.AddListener(RandomColor);
+
+
+		// Set up initial position based on player prefs, if they've been set.
+		if(PlayerPrefs.HasKey("anchor_posX")){
+			CameraController.Inst.transform.parent.position = new Vector3(PlayerPrefs.GetFloat("anchor_posX"), PlayerPrefs.GetFloat("anchor_posY"), PlayerPrefs.GetFloat("anchor_posZ"));
+			CameraController.Inst.transform.parent.rotation = new Quaternion(PlayerPrefs.GetFloat("anchor_rotX"), PlayerPrefs.GetFloat("anchor_rotY"), PlayerPrefs.GetFloat("anchor_rotZ"), PlayerPrefs.GetFloat("anchor_rotW"));
+		}
+
+		pivotIndicator.SetActive(false);
+
 	} // End of OnStartLocalPlayer().
 
 
@@ -52,6 +61,9 @@ public class FlowPlayerController : NetworkBehaviour{
 		trailController.SetSpeed(hrv);
 		trailController.SetColor(playerColor);
 
+		if(Input.GetKeyDown(KeyCode.Space))
+			pivotIndicator.SetActive(false);
+
         if (isLocalPlayer){
 
 			transform.position = CameraController.Inst.transform.position;
@@ -59,19 +71,25 @@ public class FlowPlayerController : NetworkBehaviour{
 
 
 			// Manual origin movement
-			Vector3 throttle = Vector3.zero;
+			Vector3 posThrottle = Vector3.zero;
+			float yawThrottle = 0f;
 			if(Input.GetKey(KeyCode.W))
-				throttle.z += 1f;
+				posThrottle.z += 1f;
 			if(Input.GetKey(KeyCode.S))
-				throttle.z -= 1f;
+				posThrottle.z -= 1f;
 			if(Input.GetKey(KeyCode.D))
-				throttle.x += 1f;
+				posThrottle.x += 1f;
 			if(Input.GetKey(KeyCode.A))
-				throttle.x -= 1f;
+				posThrottle.x -= 1f;
 			if(Input.GetKey(KeyCode.R))
-				throttle.y += 1f;
+				posThrottle.y += 1f;
 			if(Input.GetKey(KeyCode.F))
-				throttle.y -= 1f;
+				posThrottle.y -= 1f;
+
+			if(Input.GetKey(KeyCode.LeftArrow))
+				yawThrottle -= 1f;
+			if(Input.GetKey(KeyCode.RightArrow))
+				yawThrottle += 1f;
 
 
 			updateCooldown = Mathf.MoveTowards(updateCooldown, 0f, Time.deltaTime);
@@ -100,7 +118,24 @@ public class FlowPlayerController : NetworkBehaviour{
 				}
 			}
 			
-			CameraController.Inst.transform.parent.position += transform.rotation * throttle * Time.deltaTime * 3f;
+
+			// Adjust the position of the camera's parent object, because Unity's native VR support adjusts the local position/rotation
+			//   of the main camera.
+			CameraController.Inst.transform.parent.position += transform.rotation * posThrottle * Time.deltaTime * 3f;
+			CameraController.Inst.transform.parent.rotation *= Quaternion.AngleAxis(yawThrottle * 45f * Time.deltaTime, Vector3.up);
+
+
+			// Save position/rotation to playerprefs so we can recall it next time.
+			if((posThrottle != Vector3.zero) || (yawThrottle != 0f)){
+				PlayerPrefs.SetFloat("anchor_posX", CameraController.Inst.transform.parent.position.x);
+				PlayerPrefs.SetFloat("anchor_posY", CameraController.Inst.transform.parent.position.y);
+				PlayerPrefs.SetFloat("anchor_posZ", CameraController.Inst.transform.parent.position.z);
+
+				PlayerPrefs.SetFloat("anchor_rotX", CameraController.Inst.transform.parent.rotation.x);
+				PlayerPrefs.SetFloat("anchor_rotY", CameraController.Inst.transform.parent.rotation.y);
+				PlayerPrefs.SetFloat("anchor_rotZ", CameraController.Inst.transform.parent.rotation.z);
+				PlayerPrefs.SetFloat("anchor_rotW", CameraController.Inst.transform.parent.rotation.w);
+			}
 		}
 
     } // End of Update().
