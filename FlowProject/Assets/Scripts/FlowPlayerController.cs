@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VR;
 using UnityEngine.Networking;
 
 public class FlowPlayerController : NetworkBehaviour{
@@ -73,28 +74,24 @@ public class FlowPlayerController : NetworkBehaviour{
 			transform.position = CameraController.Inst.transform.position;
 			transform.rotation = CameraController.Inst.transform.rotation;
 
+			// Set origin
+			if(Input.GetKeyDown(KeyCode.Space)){
+				CameraController.Inst.transform.parent.rotation = Quaternion.Inverse(CameraController.Inst.transform.localRotation);
+				Vector3 tempEulers = CameraController.Inst.transform.parent.eulerAngles;
+				tempEulers.x = 0f;
+				tempEulers.z = 0f;
+				CameraController.Inst.transform.parent.eulerAngles = tempEulers;
+				CameraController.Inst.transform.parent.position -= CameraController.Inst.transform.position;
 
-			// Manual origin movement
-			Vector3 posThrottle = Vector3.zero;
-			float yawThrottle = 0f;
-			if(Input.GetKey(KeyCode.W))
-				posThrottle.z += 1f;
-			if(Input.GetKey(KeyCode.S))
-				posThrottle.z -= 1f;
-			if(Input.GetKey(KeyCode.D))
-				posThrottle.x += 1f;
-			if(Input.GetKey(KeyCode.A))
-				posThrottle.x -= 1f;
-			if(Input.GetKey(KeyCode.R))
-				posThrottle.y += 1f;
-			if(Input.GetKey(KeyCode.F))
-				posThrottle.y -= 1f;
+				PlayerPrefs.SetFloat("anchor_posX", CameraController.Inst.transform.parent.position.x);
+				PlayerPrefs.SetFloat("anchor_posY", CameraController.Inst.transform.parent.position.y);
+				PlayerPrefs.SetFloat("anchor_posZ", CameraController.Inst.transform.parent.position.z);
 
-			if(Input.GetKey(KeyCode.LeftArrow))
-				yawThrottle -= 1f;
-			if(Input.GetKey(KeyCode.RightArrow))
-				yawThrottle += 1f;
-
+				PlayerPrefs.SetFloat("anchor_rotX", CameraController.Inst.transform.parent.rotation.x);
+				PlayerPrefs.SetFloat("anchor_rotY", CameraController.Inst.transform.parent.rotation.y);
+				PlayerPrefs.SetFloat("anchor_rotZ", CameraController.Inst.transform.parent.rotation.z);
+				PlayerPrefs.SetFloat("anchor_rotW", CameraController.Inst.transform.parent.rotation.w);
+			}
 
 			updateCooldown = Mathf.MoveTowards(updateCooldown, 0f, Time.deltaTime);
 			if(updateCooldown == 0f){
@@ -124,27 +121,7 @@ public class FlowPlayerController : NetworkBehaviour{
                     }
                 }
 			}
-			
-
-			// Adjust the position of the camera's parent object, because Unity's native VR support adjusts the local position/rotation
-			//   of the main camera.
-			CameraController.Inst.transform.parent.position += transform.rotation * posThrottle * Time.deltaTime * 3f;
-			CameraController.Inst.transform.parent.rotation *= Quaternion.AngleAxis(yawThrottle * 45f * Time.deltaTime, Vector3.up);
-
-
-			// Save position/rotation to playerprefs so we can recall it next time.
-			if((posThrottle != Vector3.zero) || (yawThrottle != 0f)){
-				PlayerPrefs.SetFloat("anchor_posX", CameraController.Inst.transform.parent.position.x);
-				PlayerPrefs.SetFloat("anchor_posY", CameraController.Inst.transform.parent.position.y);
-				PlayerPrefs.SetFloat("anchor_posZ", CameraController.Inst.transform.parent.position.z);
-
-				PlayerPrefs.SetFloat("anchor_rotX", CameraController.Inst.transform.parent.rotation.x);
-				PlayerPrefs.SetFloat("anchor_rotY", CameraController.Inst.transform.parent.rotation.y);
-				PlayerPrefs.SetFloat("anchor_rotZ", CameraController.Inst.transform.parent.rotation.z);
-				PlayerPrefs.SetFloat("anchor_rotW", CameraController.Inst.transform.parent.rotation.w);
-			}
 		}
-
     } // End of Update().
 
 	
@@ -161,6 +138,7 @@ public class FlowPlayerController : NetworkBehaviour{
 	} // End of Cmd_SetEEGConcent().
 
 
+
 	public void SetEEGMellow(float newVal){
 		eegMellow = newVal;
 		Cmd_SetEEGMellow(eegMellow);
@@ -170,7 +148,6 @@ public class FlowPlayerController : NetworkBehaviour{
 		eegMellow = newVal;
 	} // End of Cmd_SetEEGMellow().
 
-
 	public void SetHRV(float newVal){
 		hrv = newVal;
 		Cmd_SetHRV(hrv);
@@ -179,7 +156,7 @@ public class FlowPlayerController : NetworkBehaviour{
 	[Command] private void Cmd_SetHRV(float newVal){
 		hrv = newVal;
 	} // End of Cmd_SetEEGMellow().
-	
+
 
 
 	// Player Color ---------------------------------------------------------- //
