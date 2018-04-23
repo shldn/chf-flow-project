@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Runtime.Serialization;
@@ -12,9 +10,18 @@ public class HRVServer {
     static int port = 80;
     static TcpListener hrvServer = null;
 
-    public static Action<HRVMessage> MessageReceived;
+    public Action<HRVMessage> MessageReceived;
 
-    public static void Initialize() {
+    private static HRVServer mInst = null;
+    public static HRVServer Inst {
+        get {
+            if (mInst == null)
+                mInst = new HRVServer();
+            return mInst;
+        }
+    }
+
+    private HRVServer() {
 
         Debug.Log("HRVServer Init");
         IPAddress localAddr = IPAddress.Parse(GetLocalIPAddress());
@@ -47,7 +54,7 @@ public class HRVServer {
         return returnIP;
     }
 
-    private static void ConnectToNextClient() {
+    private void ConnectToNextClient() {
         try {
             hrvServer.BeginAcceptTcpClient(new AsyncCallback(AcceptConnectionFromViewer), hrvServer);
         }
@@ -56,7 +63,7 @@ public class HRVServer {
         }
     }
 
-    private static void AcceptConnectionFromViewer(IAsyncResult ar) {
+    private void AcceptConnectionFromViewer(IAsyncResult ar) {
         TcpListener listener = (TcpListener)ar.AsyncState;
         TcpClient client = hrvServer.EndAcceptTcpClient(ar);
 
@@ -74,7 +81,7 @@ public class HRVServer {
     }
 
 
-    static string ReadMessage(NetworkStream stream) {
+    string ReadMessage(NetworkStream stream) {
         StringBuilder message = new StringBuilder();
         if (stream.CanRead) {
             byte[] myReadBuffer = new byte[1024];
@@ -84,15 +91,9 @@ public class HRVServer {
             // Incoming message may be larger than the buffer size.
             do {
                 numberOfBytesRead = stream.Read(myReadBuffer, 0, myReadBuffer.Length);
-
                 message.AppendFormat("{0}", Encoding.ASCII.GetString(myReadBuffer, 0, numberOfBytesRead));
-
             }
             while (stream.DataAvailable);
-
-            // Print out the received message to the console.
-            Debug.LogError("You received the following message : " +
-                                         message);
         }
         else {
             Debug.LogError("Sorry.  You cannot read from this NetworkStream.");
@@ -100,7 +101,7 @@ public class HRVServer {
         return message.ToString();
     }
 
-    static string GetMessageFromHTTPPostRequest(string msg) {
+    string GetMessageFromHTTPPostRequest(string msg) {
 
         // find the start of the data we are interested in. 
         int index = msg.IndexOf("Content-Length: ");
