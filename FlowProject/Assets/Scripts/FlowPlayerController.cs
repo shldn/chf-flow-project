@@ -70,7 +70,7 @@ public class FlowPlayerController : NetworkBehaviour{
 			transform.position = CameraController.Inst.transform.position;
 			transform.rotation = CameraController.Inst.transform.rotation;
 
-			// Set origin
+			// Set origin to headset position with SPACEBAR
 			if(Input.GetKeyDown(KeyCode.Space)){
 				CameraController.Inst.transform.parent.rotation = Quaternion.Inverse(CameraController.Inst.transform.localRotation);
 				Vector3 tempEulers = CameraController.Inst.transform.parent.eulerAngles;
