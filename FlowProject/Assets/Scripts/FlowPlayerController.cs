@@ -23,6 +23,8 @@ public class FlowPlayerController : NetworkBehaviour{
 
 	[SyncVar] private Color playerColor = Color.white;
 
+    // HRV
+    HRVListener hrvListener = null;
 
 	public override void OnStartLocalPlayer(){
 		local = this;
@@ -35,6 +37,8 @@ public class FlowPlayerController : NetworkBehaviour{
 		GameObject.Find("button_color_green").GetComponent<Button>().onClick.AddListener(() => Cmd_SetColor(Color.green));
 		GameObject.Find("button_color_random").GetComponent<Button>().onClick.AddListener(RandomColor);
 
+        // Setup HRVReceiver
+        hrvListener = new HRVListener();
 
 		// Set up initial position based on player prefs, if they've been set.
 		if(PlayerPrefs.HasKey("anchor_posX")){
@@ -109,10 +113,13 @@ public class FlowPlayerController : NetworkBehaviour{
 					}
 				}
 
-				if(hrv != hrv_last){
-					hrv_last = hrv;
-					Cmd_SetHRV(hrv);
-				}
+                if (hrvListener.Active) {
+                    hrv = hrvListener.LastNormalizedSample;
+                    if (hrv != hrv_last) {
+                        hrv_last = hrv;
+                        Cmd_SetHRV(hrv);
+                    }
+                }
 			}
 		}
     } // End of Update().
