@@ -15,6 +15,7 @@ public class MuseManager : MonoBehaviour {
     private bool touchingForehead = false;
     private int offForeheadCounter = 0;
     private float lastConcentrationMeasure = 0f;
+    private float lastMellowMeasure = 0f;
     private float batteryLevel = 1.0f;
     private List<int> headConnectionStatus = new List<int>() {0,0,0,0};
     private DateTime timeOfLastMessage = DateTime.Now - new TimeSpan(1, 1, 1);
@@ -28,7 +29,9 @@ public class MuseManager : MonoBehaviour {
         get {
             float concentration = lastConcentrationMeasure;
             return !invertConcentration? concentration : 1f - concentration;
-        }}
+        }
+	}
+	public float LastMellowMeasure { get { return lastMellowMeasure; } }
 	public bool MuseDetected { get { return SecondsSinceLastMessage < 1f; } }
     public float SecondsSinceLastMessage { get { return (float)(DateTime.Now - timeOfLastMessage).TotalSeconds; } }
     public int NumBlinksInLastSecond { get { return Sum(blinkQueue); } }
@@ -41,12 +44,6 @@ public class MuseManager : MonoBehaviour {
 	bool invertConcentration = false;
 	bool slowResponse = false;
 	public bool SlowResponse {get{return slowResponse;}}
-
-
-	// Diagetic GUI
-	public Transform[] physicalCxnInds = new Transform[0];
-	Vector3 defaultPhysCxnIndScale = Vector3.one;
-	public TextMesh physText = null;
 
 
     // Events
@@ -72,20 +69,20 @@ public class MuseManager : MonoBehaviour {
         if (OSCHandler.Instance.Servers.ContainsKey("AssemblyOSC"))
             OSCHandler.Instance.Servers["AssemblyOSC"].server.PacketReceivedEvent += Server_PacketReceivedEvent;
 #endif
-
-		if(physicalCxnInds.Length > 0)
-			defaultPhysCxnIndScale = physicalCxnInds[0].localScale;
     }
 
 	void Update () {
         if (Input.GetKeyDown(KeyCode.RightAlt) || Input.GetKeyDown(KeyCode.LeftAlt))
 			invertConcentration = !invertConcentration;
+
+		/*
 		if(Input.GetKeyDown(KeyCode.S))
 			slowResponse = !slowResponse;
         if (Input.GetKeyDown(KeyCode.L))
             useLSL = !useLSL;
         if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.F))
             forceDataDisplay = !forceDataDisplay;
+		*/
 
         //testing
         //HandleConcentrationSample(2f * UnityEngine.Random.value);
@@ -157,7 +154,9 @@ public class MuseManager : MonoBehaviour {
             MetricUpdate("concentration", sample);
     }
 
-    void HandleMellowSample(float sample) {
+    void HandleMellowSample(float sample)
+	{
+        lastMellowMeasure = sample;
         if (MetricUpdate != null)
             MetricUpdate("mellow", sample);
     }
@@ -205,8 +204,6 @@ public class MuseManager : MonoBehaviour {
 			GUI.DrawTexture(sensorStatusRect, sensorDisplayIn);
 
 			sensorIndSizes[i] = Mathf.SmoothDamp(sensorIndSizes[i], HeadConnectionStatus[i], ref sensorIndSizeVels[i], 0.25f);
-			if(physicalCxnInds.Length > 0)
-				physicalCxnInds[i].localScale = (defaultPhysCxnIndScale * ((4f - sensorIndSizes[i]) / 3f));
 		}
 
         GUI.skin.label.fontSize = 14;
@@ -237,13 +234,6 @@ public class MuseManager : MonoBehaviour {
 
 
 			GUI.Label(MathUtilities.CenteredSquare(Screen.width * 0.5f, ((sensorRingSize + (sensorRingSpacing)) * Mathf.Sqrt(wearingHeadsetIndication)) + 505f, 1000f), statusStr);
-			if(physText) {
-				physText.text = statusStr;
-				physText.GetComponent<Renderer>().enabled = true;
-			}
-		} else {
-			if(physText)
-				physText.GetComponent<Renderer>().enabled = false;
 		}
     }
 }

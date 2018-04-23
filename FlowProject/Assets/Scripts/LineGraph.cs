@@ -13,11 +13,14 @@ public class LineGraph : MonoBehaviour {
 
 	public float sample = 0f;
     public Color32 color { set { if (myLineRenderer) { myLineRenderer.startColor = myLineRenderer.endColor = value; } } }
-	void Awake () {
+
+
+	private void Awake () {
 		myLineRenderer = GetComponent<LineRenderer>();
-	}
+	} // End of Awake().
 	
-	void Update () {
+
+	private void Update () {
 		takeDataCooldown -= Time.deltaTime;
 		while(takeDataCooldown <= 0f){
             if(takeDataRate > 0f)
@@ -39,5 +42,6 @@ public class LineGraph : MonoBehaviour {
 		myLineRenderer.positionCount = graphPositions.Length;
 		myLineRenderer.SetPositions(graphPositions);
 		
-	}
-}
+	} // End of Update().
+
+} // End of LineGraph.
