@@ -9,6 +9,9 @@ public class FlowPlayerController : NetworkBehaviour{
 	[SerializeField] private FlowtrailController trailController = null;
 	[SerializeField] private GameObject pivotIndicator = null;
 
+	[SerializeField] private Renderer graphicRenderer = null;
+
+
 	private float updateCooldown = 0f;
 
 	// Synchronized Variables ============================================== //
@@ -48,6 +51,8 @@ public class FlowPlayerController : NetworkBehaviour{
 
 		pivotIndicator.SetActive(false);
 
+		Destroy(graphicRenderer);
+
 	} // End of OnStartLocalPlayer().
 
 
@@ -65,6 +70,9 @@ public class FlowPlayerController : NetworkBehaviour{
 		trailController.SetWidth(eegMellow);
 		trailController.SetSpeed(hrv);
 		trailController.SetColor(playerColor);
+
+		if(graphicRenderer)
+			graphicRenderer.material.SetColor("_TintColor", Color.Lerp(graphicRenderer.material.GetColor("_TintColor"), Color.Lerp(playerColor, Color.black, 0.5f), Time.deltaTime * 0.1f));
 
 		if(Input.GetKeyDown(KeyCode.Space))
 			pivotIndicator.SetActive(false);

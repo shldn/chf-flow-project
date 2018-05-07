@@ -61,7 +61,7 @@ public class Flowtrail : MonoBehaviour {
 		rotationAxis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 		targetRotationAxis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 		orbitSpeed = Random.Range(45f, 720f);
-		targetOrbitDist = Random.Range(2f, 10f);
+		targetOrbitDist = Random.Range(0.5f, 2f);
 		widthMult = Random.Range(0.05f, 0.2f);
 		
 		smoothTime = Random.Range(0.5f, 5f);
@@ -107,7 +107,7 @@ public class Flowtrail : MonoBehaviour {
 		targetPosition = /*orbitPosAverage + */(rotation * Vector3.forward * orbitDist);
 		position = Vector3.SmoothDamp(position, targetPosition, ref positionVel, smoothTime);
 		Vector3 localPosition = (controllers[0].transform.rotation * position);
-		targetLinkedPosition = controllers[0].transform.position + (localPosition.normalized * Mathf.Clamp(localPosition.magnitude, 0.5f, Mathf.Infinity));
+		targetLinkedPosition = controllers[0].transform.position + (localPosition.normalized * Mathf.Clamp(localPosition.magnitude, 0.25f, Mathf.Infinity));
 		linkedPosition = Vector3.SmoothDamp(linkedPosition, targetLinkedPosition, ref linkedPositionVel, linkedSmoothTime);
 		transform.position = linkedPosition;
 

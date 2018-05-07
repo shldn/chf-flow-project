@@ -335,10 +335,15 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Scripts\Billboard.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\FlowPlayerController.cs" />
     <Compile Include="Assets\Scripts\Flowtrail.cs" />
     <Compile Include="Assets\Scripts\FlowtrailController.cs" />
+    <Compile Include="Assets\Scripts\HRVGrapher.cs" />
+    <Compile Include="Assets\Scripts\HRVListener.cs" />
+    <Compile Include="Assets\Scripts\HRVMessage.cs" />
+    <Compile Include="Assets\Scripts\HRVServer.cs" />
     <Compile Include="Assets\Scripts\LineGraph.cs" />
     <Compile Include="Assets\Scripts\MathUtilities.cs" />
     <Compile Include="Assets\Scripts\MuseGrapher.cs" />
