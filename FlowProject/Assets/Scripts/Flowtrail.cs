@@ -129,15 +129,6 @@ public class Flowtrail : MonoBehaviour {
 		);
 		trail.colorGradient = trailGradient;
 
-
-		/*
-		transferCooldown = Mathf.MoveTowards(transferCooldown, 0f, Time.deltaTime);
-		if(transferCooldown == 0f){
-			AssignToController(FlowtrailController.all[Random.Range(0, FlowtrailController.all.Count)]);
-			transferCooldown = Random.Range(0f, 60f);
-		}
-		*/
-
 	} // End of Update().
 
 } // End of FlowTrail.
