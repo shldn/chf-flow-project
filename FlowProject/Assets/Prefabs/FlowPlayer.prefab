@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4175335122607634}
   - component: {fileID: 33292507036668614}
   - component: {fileID: 23908552729386840}
+  - component: {fileID: 114779126246737446}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -72,7 +73,7 @@ Transform:
   m_GameObject: {fileID: 1799394943040106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 4268660097702922}
   m_RootOrder: 1
@@ -242,6 +243,17 @@ MonoBehaviour:
     i15: 138
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114779126246737446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1799394943040106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b43fefad021d44fab6787d18ac9179, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114926769230485912
 MonoBehaviour:
   m_ObjectHideFlags: 1
