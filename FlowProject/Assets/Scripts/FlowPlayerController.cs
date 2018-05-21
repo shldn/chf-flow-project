@@ -124,6 +124,7 @@ public class FlowPlayerController : NetworkBehaviour{
                 if (hrvListener.Active) {
                     hrv = hrvListener.LastNormalizedSample;
                     if (hrv != hrv_last) {
+                        GameObject.Find("slider_hrv").GetComponentInChildren<Slider>().value = hrv;
                         hrv_last = hrv;
                         Cmd_SetHRV(hrv);
                     }
