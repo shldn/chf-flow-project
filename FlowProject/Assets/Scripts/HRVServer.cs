@@ -54,7 +54,7 @@ public class HRVServer {
         return returnIP;
     }
 
-    private void ConnectToNextClient() {
+    private static void ConnectToNextClient() {
         try {
             hrvServer.BeginAcceptTcpClient(new AsyncCallback(AcceptConnection), hrvServer);
         }
@@ -63,7 +63,7 @@ public class HRVServer {
         }
     }
 
-    private void AcceptConnection(IAsyncResult ar) {
+    private static void AcceptConnection(IAsyncResult ar) {
         TcpListener listener = (TcpListener)ar.AsyncState;
         TcpClient client = hrvServer.EndAcceptTcpClient(ar);
 
@@ -73,15 +73,15 @@ public class HRVServer {
 
         HRVMessage hrvMsg = JsonUtility.FromJson<HRVMessage>(json);
 
-        if (MessageReceived != null)
-            MessageReceived(hrvMsg);
+        if (Inst.MessageReceived != null)
+            Inst.MessageReceived(hrvMsg);
 
         // wait for next message
         ConnectToNextClient();
     }
 
 
-    string ReadMessage(NetworkStream stream) {
+    static string ReadMessage(NetworkStream stream) {
         StringBuilder message = new StringBuilder();
         if (stream.CanRead) {
             byte[] myReadBuffer = new byte[1024];
@@ -101,7 +101,7 @@ public class HRVServer {
         return message.ToString();
     }
 
-    string GetMessageFromHTTPPostRequest(string msg) {
+    static string GetMessageFromHTTPPostRequest(string msg) {
 
         // find the start of the data we are interested in. 
         int index = msg.IndexOf("Content-Length: ");
