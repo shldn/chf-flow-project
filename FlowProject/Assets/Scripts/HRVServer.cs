@@ -56,14 +56,14 @@ public class HRVServer {
 
     private void ConnectToNextClient() {
         try {
-            hrvServer.BeginAcceptTcpClient(new AsyncCallback(AcceptConnectionFromViewer), hrvServer);
+            hrvServer.BeginAcceptTcpClient(new AsyncCallback(AcceptConnection), hrvServer);
         }
         catch(Exception e) {
             Debug.LogError("Exception in Begin Accept TCP Client: " + e.ToString());
         }
     }
 
-    private void AcceptConnectionFromViewer(IAsyncResult ar) {
+    private void AcceptConnection(IAsyncResult ar) {
         TcpListener listener = (TcpListener)ar.AsyncState;
         TcpClient client = hrvServer.EndAcceptTcpClient(ar);
 
