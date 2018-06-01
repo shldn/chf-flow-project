@@ -15,3 +15,5 @@ FlowProject/FlowProject.Player.csproj
 *.user
 *.userosscache
 *.sln.docstates
+/FlowProject/*.sln
+/FlowProject/*.csproj
