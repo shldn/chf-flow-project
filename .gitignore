@@ -6,6 +6,8 @@ FlowProject/Temp/*
 FlowProject/FlowProject.csproj
 FlowProject/FlowProject.Editor.csproj
 FlowProject/FlowProject.Player.csproj
+FlowProject/.vs/*
+FlowProject/obj/*
 
 # unity generates the project files
 *.csproj
