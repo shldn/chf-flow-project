@@ -9,7 +9,7 @@ public class HRVListener {
     public float LastNormalizedSample { get { return (float)(lastRR - rrMin) / (float)(rrMax - rrMin); } }
 
     public HRVListener() {
-        HRVServer.Inst.MessageReceived += HandleHRVMessage;
+        //HRVServer.Inst.MessageReceived += HandleHRVMessage;
     }
 
     void HandleHRVMessage(HRVMessage msg) {

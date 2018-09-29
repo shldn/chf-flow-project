@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - drumstick
+  - note
+  - hand_deflector
+  - enemy
+  - player
   layers:
   - Default
   - TransparentFX
@@ -13,13 +18,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Instrument
+  - Player
+  - Hands
+  - Drumsticks
+  - Ground
+  - Enemy
+  - Deflector
   - 
   - 
   - 

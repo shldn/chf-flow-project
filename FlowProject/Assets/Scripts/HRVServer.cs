@@ -3,14 +3,15 @@ using System.Net.Sockets;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
 public class HRVServer {
 
-    static int port = 80;
+    static int port = 12345;
     static TcpListener hrvServer = null;
 
-    public Action<HRVMessage> MessageReceived;
+    public Action<HRVUpdate> MessageReceived;
 
     private static HRVServer mInst = null;
     public static HRVServer Inst {
@@ -21,11 +22,20 @@ public class HRVServer {
         }
     }
 
+    private TcpListener tcpListener;
+    private Thread tcpListenerThread;
+    TcpClient connectedTcpClient;
+
     private HRVServer() {
+        tcpListenerThread = new Thread(new ThreadStart(ListenForIncommingRequests));
+        tcpListenerThread.IsBackground = true;
+        tcpListenerThread.Start();
 
+        /*
         Debug.Log("HRVServer Init");
-        IPAddress localAddr = IPAddress.Parse(GetLocalIPAddress());
-
+        //IPAddress localAddr = IPAddress.Parse(GetLocalIPAddress());
+        IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+        Debug.Log(localAddr);
         try {
             hrvServer = new TcpListener(localAddr, port);
         } catch(Exception e) {
@@ -39,7 +49,7 @@ public class HRVServer {
             Debug.LogError("Exception starting tcp listener: " + e.ErrorCode + " " + e.ToString());
         }
 
-        ConnectToNextClient();
+        ConnectToNextClient();*/
     }
 
     public static string GetLocalIPAddress() {
@@ -52,6 +62,34 @@ public class HRVServer {
             }
         }
         return returnIP;
+    }
+
+    private void ListenForIncommingRequests()
+    {
+        Debug.Log("HRVServer Init");
+        //IPAddress localAddr = IPAddress.Parse(GetLocalIPAddress());
+        IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+        Debug.Log(localAddr);
+        try
+        {
+            hrvServer = new TcpListener(localAddr, port);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Exception with TcpListener: " + e.ToString());
+        }
+
+        // Start listening for client requests.
+        try
+        {
+            hrvServer.Start();
+        }
+        catch (SocketException e)
+        {
+            Debug.LogError("Exception starting tcp listener: " + e.ErrorCode + " " + e.ToString());
+        }
+
+        ConnectToNextClient();
     }
 
     private static void ConnectToNextClient() {
@@ -67,17 +105,28 @@ public class HRVServer {
         TcpListener listener = (TcpListener)ar.AsyncState;
         TcpClient client = hrvServer.EndAcceptTcpClient(ar);
 
-        NetworkStream stream = client.GetStream();
-        string msg = ReadMessage(stream);
-        string json = GetMessageFromHTTPPostRequest(msg);
+        while (true)
+        {
+            NetworkStream stream = client.GetStream();
+            string msg = ReadMessage(stream);
+            HRVUpdate update = new HRVUpdate();
+            update.rrMin = int.Parse(msg.Split(',')[0]);
+            update.rrMax = int.Parse(msg.Split(',')[1]);
+            update.rrLast = int.Parse(msg.Split(',')[2]);
+            if (Inst.MessageReceived != null)
+                Inst.MessageReceived(update);
+        }
 
-        HRVMessage hrvMsg = JsonUtility.FromJson<HRVMessage>(json);
+        //string json = GetMessageFromHTTPPostRequest(msg);
 
-        if (Inst.MessageReceived != null)
-            Inst.MessageReceived(hrvMsg);
+
+        //HRVMessage hrvMsg = JsonUtility.FromJson<HRVMessage>(json);
+
+        //if (Inst.MessageReceived != null)
+        //    Inst.MessageReceived(hrvMsg);
 
         // wait for next message
-        ConnectToNextClient();
+        //ConnectToNextClient();
     }
 
 

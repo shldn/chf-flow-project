@@ -21,13 +21,16 @@ public class HRVGrapher : MonoBehaviour {
         }
     }
 
-    void HandleHRVMessage(HRVMessage msg) {
-        string msgStr = "Handling hrv message\n";
+    void HandleHRVMessage(HRVUpdate update) {
+        rrMin = update.rrMin;
+        rrMax = update.rrMax;
+        lastRR = update.rrLast;
+        /*string msgStr = "Handling hrv message\n";
         for (int i = 0; i < msg.logs.Count; ++i) {
             msgStr += "\t" + msg.logs[i].ts + " " + msg.logs[i].rr + "\n";
             HandleRange(msg.logs[i].rr);
             lastRR = msg.logs[i].rr;
-        }
+        }*/
         //Debug.LogError(msgStr + " " + lastRR + " min: " + rrMin + " max: " + rrMax);
     }
 
